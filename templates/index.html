@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Candlestick Chart</title>
+    <script src="https://uncdn.ant.design/lightweight-charts/3.9.0/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div id="chart"></div>
+    <script>
+        var chartData = {{ ohlcv | tojson | safe }};
+        console.log(chartData);
+
+        var chart = LightweightCharts.createChart(document.getElementById('chart'), {
+            width: 800,
+            height: 400,
+            rightPriceScale: {
+                scaleMargins: {
+                    top: 0.3,
+                    bottom: 0.25,
+                },
+                borderVisible: false,
+            },
+            timeScale: {
+                borderVisible: false,
+            }
+        });
+
+        var candlestickSeries = chart.addCandlestickSeries();
+        candlestickSeries.setData(chartData);
+    </script>
+</body>
+</html>
