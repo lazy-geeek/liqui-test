@@ -2,25 +2,26 @@ const chart = LightweightCharts.createChart(document.getElementById('chart-conta
     width: 600,
     height: 300,
     layout: {
-        backgroundColor: '#ffffff',
-        textColor: 'rgba(0, 0, 0, 0.9)',
+        backgroundColor: '#2B2B43',
+        textColor: '#D9D9D9',
     },
     grid: {
         vertLines: {
-            color: 'rgba(197, 203, 206, 0.5)',
+            color: '#2B2B43',
         },
         horzLines: {
-            color: 'rgba(197, 203, 206, 0.5)',
+            color: '#363C4E',
         },
     },
     crosshair: {
         mode: LightweightCharts.CrosshairMode.Normal,
+        color: '#758696',
     },
     priceScale: {
-        borderColor: 'rgba(197, 203, 206, 0.8)',
+        borderColor: '#363C4E',
     },
     timeScale: {
-        borderColor: 'rgba(197, 203, 206, 0.8)',
+        borderColor: '#363C4E',
     },
 });
 
@@ -152,4 +153,5 @@ function syncToTheme(theme) {
 }
 
 var switcherElement = createSimpleSwitcher(['Dark', 'Light'], 'Dark', syncToTheme);
+syncToTheme('Dark');
 document.getElementById('theme-switcher').appendChild(switcherElement);
