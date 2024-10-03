@@ -24,6 +24,8 @@ const chart = LightweightCharts.createChart(chartContainer, {
     },
     timeScale: {
         borderColor: '#363C4E',
+        timeVisible: true,
+        secondsVisible: false,
     },
 });
 
