@@ -50,40 +50,7 @@ document.getElementById('timeframe').addEventListener('change', function () {
 
 fetchData('15m');
 
-function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
-    var switcherElement = document.createElement('div');
-    switcherElement.classList.add('switcher');
-
-    var intervalElements = items.map(function (item) {
-        var itemEl = document.createElement('button');
-        itemEl.innerText = item;
-        itemEl.classList.add('switcher-item');
-        itemEl.classList.toggle('switcher-active-item', item === activeItem);
-        itemEl.addEventListener('click', function () {
-            onItemClicked(item);
-        });
-        switcherElement.appendChild(itemEl);
-        return itemEl;
-    });
-
-    function onItemClicked(item) {
-        if (item === activeItem) {
-            return;
-        }
-
-        intervalElements.forEach(function (element, index) {
-            element.classList.toggle('switcher-active-item', items[index] === item);
-        });
-
-        activeItem = item;
-
-        activeItemChangedCallback(item);
-    }
-
-    return switcherElement;
-}
-
-var darkTheme = {
+const darkTheme = {
     chart: {
         layout: {
             background: {
@@ -143,17 +110,5 @@ const lightTheme = {
         lineColor: 'rgba(33, 150, 243, 1)',
     },
 };
-
-var themesData = {
-    Dark: darkTheme,
-    Light: lightTheme,
-};
-
-function syncToTheme(theme) {
-    chart.applyOptions(themesData[theme].chart);
-    candleSeries.applyOptions(themesData[theme].series);
-}
-
-var switcherElement = createSimpleSwitcher(['Dark', 'Light'], 'Dark', syncToTheme);
-syncToTheme('Dark');
-document.getElementById('theme-switcher').appendChild(switcherElement);
+chart.applyOptions(darkTheme.chart);
+candleSeries.applyOptions(darkTheme.series);
