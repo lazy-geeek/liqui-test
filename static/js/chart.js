@@ -3,6 +3,7 @@ const chartContainer = document.getElementById('chart-container');
 const chart = LightweightCharts.createChart(chartContainer, {
     width: chartContainer.clientWidth,
     height: chartContainer.clientHeight,
+    autosize: true,
     layout: {
         backgroundColor: '#2B2B43',
         textColor: '#D9D9D9',

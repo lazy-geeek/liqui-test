@@ -12,7 +12,7 @@ def index():
 @app.route("/get_data/<timeframe>")
 def get_data(timeframe):
     exchange = ccxt.binanceusdm()
-    ohlcv = exchange.fetch_ohlcv("BTC/USDT", timeframe, limit=100)
+    ohlcv = exchange.fetch_ohlcv("BTC/USDT", timeframe, limit=1000)
     return jsonify(ohlcv)
 
 
