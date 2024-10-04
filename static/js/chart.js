@@ -21,6 +21,8 @@ const chart = LightweightCharts.createChart(chartContainer, {
     },
     priceScale: {
         borderColor: '#363C4E',
+        minTickCount: 5, // Allow for more ticks on the y-axis
+        precision: 8, // Set precision to 8 decimal places
     },
     timeScale: {
         borderColor: '#363C4E',
@@ -43,7 +45,24 @@ function fetchData(symbol, timeframe) {
                 close: d[4],
             }));
             candleSeries.setData(formattedData);
+            updatePriceScalePrecision(formattedData); // Refresh price scale precision
         });
+}
+
+function updatePriceScalePrecision(data) {
+    const prices = data.map(d => [d.open, d.high, d.low, d.close]).flat();
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const priceRange = maxPrice - minPrice;
+
+    // Adjust precision based on price range
+    if (priceRange < 0.01) {
+        chart.priceScale().applyOptions({ precision: 8 });
+    } else if (priceRange < 1) {
+        chart.priceScale().applyOptions({ precision: 4 });
+    } else {
+        chart.priceScale().applyOptions({ precision: 2 });
+    }
 }
 
 document.getElementById('timeframe').addEventListener('change', function () {
