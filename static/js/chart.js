@@ -1,8 +1,8 @@
 const chartContainer = document.getElementById('chart-container');
 
 const chart = LightweightCharts.createChart(chartContainer, {
-    width: 600,
-    height: 400,
+    width: chartContainer.clientWidth,
+    height: chartContainer.clientHeight,
     layout: {
         backgroundColor: '#ffffff', /* Updated background color */
         textColor: '#343a40', /* Updated text color */
