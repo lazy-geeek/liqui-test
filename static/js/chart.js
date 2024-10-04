@@ -4,20 +4,20 @@ const chart = LightweightCharts.createChart(chartContainer, {
     width: 600,
     height: 400,
     layout: {
-        backgroundColor: '#2B2B43',
-        textColor: '#D9D9D9',
+        backgroundColor: '#ffffff', /* Updated background color */
+        textColor: '#343a40', /* Updated text color */
     },
     grid: {
         vertLines: {
-            color: '#2B2B43',
+            color: 'rgba(197, 203, 206, 0.5)', /* Updated color and added transparency */
         },
         horzLines: {
-            color: '#363C4E',
+            color: 'rgba(197, 203, 206, 0.5)', /* Updated color and added transparency */
         },
     },
     crosshair: {
         mode: LightweightCharts.CrosshairMode.Normal,
-        color: '#758696',
+        color: '#808080', /* Updated color */
     },
     priceScale: {
         borderColor: '#363C4E',

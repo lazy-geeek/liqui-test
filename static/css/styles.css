@@ -1,15 +1,68 @@
 #chart-container {
     width: 100%;
-    height: 400px; /* Ensure a minimum height */
-    background-color: lightgray; /* Temporary background for visibility */
+    height: 400px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+
+body {
+    font-family: 'Inter', sans-serif; /* More modern font */
+    line-height: 1.6;
+    background-color: #f8f9fa; /* Soft background color */
+    color: #343a40; /* Darker text color */
+}
+
+.container {
+    max-width: 960px;
+    margin: 2rem auto; /* Increased margin */
+    padding: 0 1rem; /* Added padding */
+    max-width: 960px; /* Better responsiveness */
+    margin: 0 auto;
+}
+
+.display-4 {
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.form-select {
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem; /* Increased padding */
+}
+
 
 .switcher {
     display: flex;
     align-items: center;
-    height: 30px;
-    margin-top: 8px;
-    color: #2196F3;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: #495057;
+    font-family: 'Inter', sans-serif;
+}
+
+.theme-switcher {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.theme-switcher-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+    background-color: #fff;
+    color: #495057;
+    transition: background-color 0.2s, color 0.2s; /* Smooth transition for hover effect */
+}
+
+
+.theme-switcher-item:hover {
+    background-color: #f2f3f5;
+}
+
+.theme-switcher-item.active {
+    background-color: #007bff; /* Active state background color */
+    color: #fff; /* Active state text color */
 }
 
 .switcher-item {
