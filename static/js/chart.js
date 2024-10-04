@@ -1,9 +1,8 @@
 const chartContainer = document.getElementById('chart-container');
 
 const chart = LightweightCharts.createChart(chartContainer, {
-    width: chartContainer.clientWidth,
-    height: chartContainer.clientHeight,
-    autosize: true,
+    width: 600,
+    height: 400,
     layout: {
         backgroundColor: '#2B2B43',
         textColor: '#D9D9D9',
@@ -51,7 +50,15 @@ document.getElementById('timeframe').addEventListener('change', function () {
     fetchData(this.value);
 });
 
+
+function resizeChart() {
+    chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+}
+
+window.addEventListener('resize', resizeChart);
+
 fetchData('15m');
+
 
 const darkTheme = {
     chart: {
