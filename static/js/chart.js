@@ -58,6 +58,7 @@ function fetchData(symbol, timeframe) {
             }));
             candleSeries.setData(ohlcvData);
             updatePriceScalePrecision(ohlcvData);
+            chart.priceScale().applyOptions({ autoScale: true }); // Automatically adjust Y-axis scale
 
             const liquidationData = data.liquidations.map(d => ({
                 time: new Date(d.start_timestamp_iso).getTime() / 1000,
