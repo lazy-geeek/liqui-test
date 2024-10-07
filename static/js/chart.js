@@ -61,7 +61,7 @@ function fetchData(symbol, timeframe) {
             chart.priceScale().applyOptions({ autoScale: true }); // Automatically adjust Y-axis scale
 
             const liquidationData = data.liquidations.map(d => ({
-                time: new Date(d.start_timestamp_iso).getTime() / 1000,
+                time: Math.floor(new Date(d.start_timestamp_iso).getTime()), // Convert to UNIX timestamp in milliseconds
                 value: Math.max(d.cumulated_usd_size, 0),
                 color: d.side === 'SELL' ? 'rgba(0, 150, 136, 0.5)' : 'rgba(255, 82, 82, 0.5)',
             }));

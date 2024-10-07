@@ -28,8 +28,8 @@ def fetch_liquidation_data(symbol, timeframe, start_time, end_time):
             params={
                 "symbol": symbol,
                 "timeframe": timeframe,
-                "start_timestamp_iso": start_time,
-                "end_timestamp_iso": end_time,
+                "start_timestamp": start_time,
+                "end_timestamp": end_time,
             },
         )
         response.raise_for_status()
