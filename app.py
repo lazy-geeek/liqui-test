@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Configure logging
 logging.basicConfig(
     filename="app.log",
-    level=logging.ERROR,
+    level=logging.INFO,
     format="%(asctime)s:%(levelname)s:%(message)s",
 )
 
@@ -42,7 +42,9 @@ def fetch_liquidation_data(symbol, timeframe, start_time, end_time):
 @app.route("/get_data/<symbol>/<timeframe>")
 def get_data(symbol, timeframe):
     exchange = ccxt.binanceusdm()
-    ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit=1000)
+    ohlcv = exchange.fetch_ohlcv(
+        symbol, timeframe, limit=50
+    )  # Fetch only the latest 50 candlesticks
 
     # Convert timestamps to ISO format for liquidation data
     start_time = ohlcv[0][0]
@@ -53,6 +55,10 @@ def get_data(symbol, timeframe):
     liquidation_data = fetch_liquidation_data(
         symbol, timeframe, start_time_iso, end_time_iso
     )
+
+    # Log the data for debugging
+    logging.info(f"OHLCV Data: {ohlcv}")
+    logging.info(f"Liquidation Data: {liquidation_data}")
 
     return jsonify({"ohlcv": ohlcv, "liquidations": liquidation_data})
 

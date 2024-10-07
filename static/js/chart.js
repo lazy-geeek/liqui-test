@@ -42,7 +42,12 @@ const liquidationSeries = chart.addHistogramSeries({
 
 function fetchData(symbol, timeframe) {
     fetch(`/get_data/${symbol}/${timeframe}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            return response.json();
+        })
         .then(data => {
             const ohlcvData = data.ohlcv.map(d => ({
                 time: d[0] / 1000,
@@ -60,6 +65,9 @@ function fetchData(symbol, timeframe) {
                 color: d.side === 'SELL' ? 'rgba(0, 150, 136, 0.5)' : 'rgba(255, 82, 82, 0.5)',
             }));
             liquidationSeries.setData(liquidationData);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
         });
 }
 
@@ -80,12 +88,16 @@ function updatePriceScalePrecision(data) {
 
 document.getElementById('timeframe').addEventListener('change', function () {
     const symbol = document.getElementById('symbol').value;
-    fetchData(symbol, this.value);
+    if (symbol) {
+        fetchData(symbol, this.value);
+    }
 });
 
 document.getElementById('symbol').addEventListener('change', function () {
     const timeframe = document.getElementById('timeframe').value;
-    fetchData(this.value, timeframe);
+    if (this.value) {
+        fetchData(this.value, timeframe);
+    }
 });
 
 function loadSymbols() {
@@ -123,7 +135,7 @@ function resizeChart() {
 window.addEventListener('resize', resizeChart);
 
 loadSymbols();
-fetchData('BTCUSDT', '15m');
+fetchData('BTCUSDT', '1m');
 
 const darkTheme = {
     chart: {
