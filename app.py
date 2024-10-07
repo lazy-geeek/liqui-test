@@ -33,4 +33,7 @@ def symbols():
         return jsonify({"error": "Failed to fetch symbols"}), 500
 
 if __name__ == "__main__":
+    # Delete app.log if it exists
+    if os.path.exists('app.log'):
+        os.remove('app.log')
     app.run(debug=True)
