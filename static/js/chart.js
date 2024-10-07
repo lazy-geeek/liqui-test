@@ -21,8 +21,8 @@ const chart = LightweightCharts.createChart(chartContainer, {
     },
     priceScale: {
         borderColor: '#363C4E',
-        minTickCount: 5, // Allow for more ticks on the y-axis
-        precision: 8, // Set precision to 8 decimal places
+        minTickCount: 5,
+        precision: 8,
     },
     timeScale: {
         borderColor: '#363C4E',
@@ -32,20 +32,34 @@ const chart = LightweightCharts.createChart(chartContainer, {
 });
 
 const candleSeries = chart.addCandlestickSeries();
+const liquidationSeries = chart.addHistogramSeries({
+    color: 'rgba(0, 150, 136, 0.5)',
+    priceFormat: {
+        type: 'volume',
+    },
+    priceScaleId: '',
+});
 
 function fetchData(symbol, timeframe) {
     fetch(`/get_data/${symbol}/${timeframe}`)
         .then(response => response.json())
         .then(data => {
-            const formattedData = data.map(d => ({
+            const ohlcvData = data.ohlcv.map(d => ({
                 time: d[0] / 1000,
                 open: d[1],
                 high: d[2],
                 low: d[3],
                 close: d[4],
             }));
-            candleSeries.setData(formattedData);
-            updatePriceScalePrecision(formattedData); // Refresh price scale precision
+            candleSeries.setData(ohlcvData);
+            updatePriceScalePrecision(ohlcvData);
+
+            const liquidationData = data.liquidations.map(d => ({
+                time: new Date(d.start_timestamp_iso).getTime() / 1000,
+                value: Math.max(d.cumulated_usd_size, 0),
+                color: d.side === 'SELL' ? 'rgba(0, 150, 136, 0.5)' : 'rgba(255, 82, 82, 0.5)',
+            }));
+            liquidationSeries.setData(liquidationData);
         });
 }
 
@@ -55,7 +69,6 @@ function updatePriceScalePrecision(data) {
     const maxPrice = Math.max(...prices);
     const priceRange = maxPrice - minPrice;
 
-    // Adjust precision based on price range
     if (priceRange < 0.01) {
         chart.priceScale().applyOptions({ precision: 8 });
     } else if (priceRange < 1) {
@@ -93,7 +106,6 @@ function loadSymbols() {
             });
         })
         .catch(error => {
-            // Log error to a file on the server
             fetch('/log_error', {
                 method: 'POST',
                 headers: {
