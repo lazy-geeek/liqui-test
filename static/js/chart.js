@@ -114,6 +114,9 @@ function loadSymbols() {
                 const option = document.createElement('option');
                 option.value = symbol;
                 option.textContent = symbol;
+                if (symbol === 'BTCUSDT') {
+                    option.selected = true;
+                }
                 symbolSelect.appendChild(option);
             });
         })
