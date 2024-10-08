@@ -46,15 +46,11 @@ def get_data(symbol, timeframe):
         symbol, timeframe, limit=50
     )  # Fetch only the latest 50 candlesticks
 
-    # Convert timestamps to ISO format for liquidation data
+    # Use Unix millisecond timestamps for liquidation data
     start_time = ohlcv[0][0]
     end_time = ohlcv[-1][0]
-    start_time_iso = ccxt.Exchange.iso8601(start_time)
-    end_time_iso = ccxt.Exchange.iso8601(end_time)
 
-    liquidation_data = fetch_liquidation_data(
-        symbol, timeframe, start_time_iso, end_time_iso
-    )
+    liquidation_data = fetch_liquidation_data(symbol, timeframe, start_time, end_time)
 
     # Log the data for debugging
     logging.info(f"OHLCV Data: {ohlcv}")

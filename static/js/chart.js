@@ -58,10 +58,9 @@ function fetchData(symbol, timeframe) {
             }));
             candleSeries.setData(ohlcvData);
             updatePriceScalePrecision(ohlcvData);
-            chart.priceScale().applyOptions({ autoScale: true }); // Automatically adjust Y-axis scale
 
             const liquidationData = data.liquidations.map(d => ({
-                time: Math.floor(new Date(d.start_timestamp_iso).getTime()), // Convert to UNIX timestamp in milliseconds
+                time: d.timestamp / 1000,  // Use the new timestamp format
                 value: Math.max(d.cumulated_usd_size, 0),
                 color: d.side === 'SELL' ? 'rgba(0, 150, 136, 0.5)' : 'rgba(255, 82, 82, 0.5)',
             }));
