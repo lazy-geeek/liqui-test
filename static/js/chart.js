@@ -62,7 +62,7 @@ function fetchData(symbol, timeframe) {
             const liquidationData = data.liquidations.map(d => ({
                 time: d.timestamp / 1000,  // Use the new timestamp format
                 value: Math.max(d.cumulated_usd_size, 0),
-                color: d.side === 'SELL' ? 'rgba(0, 150, 136, 0.5)' : 'rgba(255, 82, 82, 0.5)',
+                color: d.side === 'SELL' ? 'rgba(255, 82, 82, 0.5)' : 'rgba(0, 150, 136, 0.5)',
             }));
             liquidationSeries.setData(liquidationData);
         })
